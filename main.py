@@ -46,7 +46,6 @@ class TestUrbanRoutes:
     def test_3_set_phone_number(self):
         page = UrbanRoutesPage(self.driver)
         page.set_phone_number()
-        page.get_phone_number()
         assert page.get_phone_number() == data.phone_number
 
 
@@ -72,8 +71,7 @@ class TestUrbanRoutes:
     def test_7_set_ice_cream(self):
         page = UrbanRoutesPage(self.driver)
         value = page.get_ice_cream_quantity()
-        page.add_ice_cream()
-        page.get_ice_cream_quantity()
+        page.validate_ice_cream()
         assert value == '2'
         time.sleep(2)
 
@@ -85,7 +83,7 @@ class TestUrbanRoutes:
 
     def test_9_wait_for_driver_data(self):
         page = UrbanRoutesPage(self.driver)
-        time.sleep(35) #Aquí traté de usar la función wait_for_driver_data(self), pero el ejecutar el script no surte ningún efecto
+        WebDriverWait(self.driver, 60).until(expected_conditions.visibility_of_element_located(page.order_number))
         page.validate_taxi_modal_text()
         assert "El conductor llegará en" in page.validate_taxi_modal_text()
 

@@ -31,7 +31,7 @@ class UrbanRoutesPage:
     error_message = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[3]/div[2]')
     blanked_switch = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[1]/div/div[2]/div')
     ice_cream_add_button = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[3]')
-    ice_cream_quantity = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[2]/div/div[2]/div/div[2]')
+    ice_cream_quantity = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[2]')
     reserve_button = (By.CLASS_NAME, 'smart-button')
     taxi_modal = (By.CLASS_NAME, 'order-body')
     order_number = (By.CLASS_NAME, 'order-number')
@@ -60,12 +60,15 @@ class UrbanRoutesPage:
         self.set_to(hasta)
         self.get_from()
         self.get_to()
+        time.sleep(.5)
 
     def click_taxi_button(self):
         self.driver.find_element(*self.taxi_button).click()
+        time.sleep(.5)
 
     def click_comfort_button(self):
         self.driver.find_element(*self.comfort_button).click()
+        time.sleep(.5)
 
     def check_comfort_button_selected(self):
         return self.driver.find_element(*self.comfort_button).get_attribute('class')
@@ -78,19 +81,24 @@ class UrbanRoutesPage:
     #Teléfono
     def click_input_phone(self):
         self.driver.find_element(*self.input_phone).click()
+        time.sleep(.5)
 
     def set_input_phone_modal(self):
         self.driver.find_element(*self.input_phone_modal).send_keys(data.phone_number)
+        time.sleep(.5)
 
     def click_submit_button_phone_modal(self):
         self.driver.find_element(*self.submit_button_phone_modal).click()
+        time.sleep(.5)
 
     def set_phone_code_input(self):
-        code = helpers.retrieve_phone_code()
+        code = helpers.retrieve_phone_code(self.driver)
         self.driver.find_element(*self.phone_code_input).send_keys(code)
+        time.sleep(.5)
 
     def click_submit_code_button(self):
         self.driver.find_element(*self.submit_code_button).click()
+        time.sleep(.5)
 
     #Paso para introducir el número de teléfono
     def set_phone_number (self):
@@ -99,44 +107,48 @@ class UrbanRoutesPage:
         self.click_submit_button_phone_modal()
         self.set_phone_code_input()
         self.click_submit_code_button()
+        self.get_phone_number()
 
     def get_phone_number(self):
-        return self.driver.find_element(*self.phone_number).get_property('value')
+        return self.driver.find_element(*self.phone_number).text
 
     #Metodo de pago
     def click_payment_method_input(self):
         self.driver.find_element(*self.payment_method_input).click()
+        time.sleep(.5)
 
     def click_credit_card_input(self):
         self.driver.find_element(*self.credit_card_input).click()
+        time.sleep(.5)
 
     def set_card_number(self):
         self.driver.find_element(*self.card_number_input).send_keys(data.card_number)
+        time.sleep(.5)
 
     def set_card_code(self):
         self.driver.find_element(*self.card_code_input).send_keys(data.card_code)
+        time.sleep(.5)
 
     def click_remove_focus(self):
         self.driver.find_element(*self.remove_cvv_focus).click()
+        time.sleep(.5)
 
     def click_add_card_button(self):
         self.driver.find_element(*self.add_card_button).click()
+        time.sleep(.5)
 
     def close_payment_modal(self):
         self.driver.find_element(*self.close_card_modal_button).click()
+        time.sleep(.5)
 
     #Pasos para agregar tarjeta de crédito
     def add_credit_card(self):
         self.driver.implicitly_wait(3)
         self.click_payment_method_input()
-        time.sleep(1)
         self.click_credit_card_input()
         self.set_card_number()
-        time.sleep(1)
         self.set_card_code()
-        time.sleep(.5)
         self.click_remove_focus()
-        time.sleep(.5)
         self.click_add_card_button()
         self.close_payment_modal()
         return self.driver.find_element(*self.card_input_value).text
@@ -146,6 +158,7 @@ class UrbanRoutesPage:
 
     def set_driver_message(self):
         self.driver.find_element(*self.driver_message_input).send_keys(data.message_for_driver)
+        time.sleep(.5)
 
     def get_error_message(self):
         return self.driver.find_element(*self.error_message).text
