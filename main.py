@@ -41,8 +41,6 @@ class TestUrbanRoutes:
         assert 'tcard active' in page.check_comfort_button_selected()
         time.sleep((1))
 
-###ESTA ES LA PRUEBA PARA AGREGAR EL TELÉFONO, PERO AL CORRER EL CÓDIGO LA FUNCIÓN retrieve_phone_code(driver)/
-# DE LA PLANTILLA DEL CÓDIGO NO REALIZA NINGUNA ACCIÓN. SI INTRODUZCO OTRO COPY EN EL INPUT SÍ LO CAPTURA.
     def test_3_set_phone_number(self):
         page = UrbanRoutesPage(self.driver)
         page.set_phone_number()
@@ -52,28 +50,28 @@ class TestUrbanRoutes:
     def test_4_set_credit_card(self):
         page = UrbanRoutesPage(self.driver)
         page.add_credit_card()
-        assert page.check_payment_method() == 'Tarjeta'
         time.sleep(1)
+        assert page.check_payment_method() == 'Tarjeta'
 
     def test_5_set_message_to_driver(self):
         page = UrbanRoutesPage(self.driver)
         page.validate_error_message()
-        assert 'La longitud del texto supera los 24 caracteres' in page.get_error_message()
         time.sleep(1)
+        assert 'La longitud del texto supera los 24 caracteres' in page.get_error_message()
 
     def test_6_toggle_blanket_switch(self):
         page = UrbanRoutesPage(self.driver)
         page.toggle_blanket_switch()
         switch_selected = page.validate_blanket_switch()
-        assert switch_selected == 'True'
         time.sleep(1)
+        assert switch_selected == 'True'
 
     def test_7_set_ice_cream(self):
         page = UrbanRoutesPage(self.driver)
         value = page.get_ice_cream_quantity()
         page.validate_ice_cream()
+        time.sleep(1)
         assert value == '2'
-        time.sleep(2)
 
     def test_8_show_taxi_modal(self):
         page = UrbanRoutesPage(self.driver)
@@ -85,6 +83,7 @@ class TestUrbanRoutes:
         page = UrbanRoutesPage(self.driver)
         WebDriverWait(self.driver, 60).until(expected_conditions.visibility_of_element_located(page.order_number))
         page.validate_taxi_modal_text()
+        time.sleep(1)
         assert "El conductor llegará en" in page.validate_taxi_modal_text()
 
     @classmethod
